@@ -2,7 +2,7 @@
 
 ## Projekt: Aplikacja do rejestracji pacjentów
 
-### Aby uruchomić program należ zainstolować zależności od bazy danych SQLite:
+### Aby uruchomić program należ zainstolować zależności od bazy danych SQLAlcehmy:
 ```
 pip install Flask Flask-SQLAlchemy
 ```
