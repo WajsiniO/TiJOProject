@@ -2,5 +2,20 @@
 
 ## Projekt: Aplikacja do rejestracji pacjentów
 
-### Tu się pojawi dalsza część
+### Aby uruchomić program należ zainstolować zależności od bazy danych SQLite:
+```
+pip install Flask Flask-SQLAlchemy
+```
+
+### Jeżeli zainstaluje złą wersję można zaktualizować
+
+```
+pip install --upgrade Flask-SQLAlchemy
+```
+
+### Uruchomić polecieniem 
+
+```
+python app.py
+```
 
