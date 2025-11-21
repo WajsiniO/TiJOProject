@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal Medyczny - Rejestracja</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>System Rejestracji Pacjentów</h1>
+</header>
+
+<div class="container container-form">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="msg {{ category }}">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+<form action="/book" method="POST">
+
+        <h2>Informacje o wizycie</h2>
+
+        <div class="row">
+            <div class="col">
+                <div class="floating-label-group">
+                    <select name="doctor" id="doctor" required>
+                        <option value="" disabled selected hidden></option> {% for doc in doctors %}
+                            <option value="{{ doc }}">{{ doc }}</option>
+                        {% endfor %}
+                    </select>
+                    <label for="doctor">Lekarz Specjalista</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="floating-label-group">
+                    <input type="datetime-local" name="visit_date" id="visit_date" required placeholder=" ">
+                    <label for="visit_date">Data i godzina</label>
+                </div>
+            </div>
+        </div>
+
+        <h2>Dane osobowe pacjenta</h2>
+
+        <div class="floating-label-group">
+            <input type="text" name="patient_name" id="patient_name" placeholder=" " required>
+            <label for="patient_name">Imię i Nazwisko</label>
+        </div>
+
+        <div class="row">
+            <div class="col">
+                <div class="floating-label-group">
+                    <select name="gender" id="gender" required>
+                        <option value="" disabled selected hidden></option>
+                        <option value="Kobieta">Kobieta</option>
+                        <option value="Mężczyzna">Mężczyzna</option>
+                        <option value="Inna">Inna</option>
+                    </select>
+                    <label for="gender">Płeć</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="floating-label-group">
+                    <input type="text" name="pesel" id="pesel" maxlength="11" placeholder=" " required>
+                    <label for="pesel">PESEL</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="floating-label-group">
+                    <input type="date" name="birth_date" id="birth_date" required placeholder=" ">
+                    <label for="birth_date">Data Urodzenia</label>
+                </div>
+            </div>
+        </div>
+
+        <h2>Dane kontaktowe</h2>
+
+        <div class="row">
+            <div class="col">
+                <div class="floating-label-group">
+                    <input type="tel" name="phone" id="phone" placeholder=" " required>
+                    <label for="phone">Numer telefonu</label>
+                </div>
+            </div>
+            <div class="col">
+                <div class="floating-label-group">
+                    <input type="email" name="email" id="email" placeholder=" " required>
+                    <label for="email">Adres E-mail</label>
+                </div>
+            </div>
+        </div>
+
+        <div class="floating-label-group">
+            <input type="text" name="address" id="address" placeholder=" " required>
+            <label for="address">Adres zamieszkania</label>
+        </div>
+
+        <button type="submit">Zatwierdź Rezerwację</button>
+    </form>
+    <a href="/list" class="footer-link">Przejdź do listy zarejestrowanych wizyt</a>
+</div>
+
+</body>
+</html>

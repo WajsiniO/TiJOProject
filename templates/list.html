@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista Wizyt - Panel Personelu</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header>
+    <h1>Panel Zarządzania Wizytami</h1>
+</header>
+
+<div class="container container-list">
+    <div class="top-bar">
+        <span>Lista aktywnych rezerwacji</span>
+        <a href="/">+ Nowa Rejestracja</a>
+    </div>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            {% for category, message in messages %}
+                <div class="msg status-msg">{{ message }}</div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+    <div class="table-wrapper">
+        <table>
+            <thead>
+                <tr>
+                    <th>Data Wizyty</th>
+                    <th>Lekarz</th>
+                    <th>Pacjent</th>
+                    <th>Płeć</th>
+                    <th>PESEL</th>
+                    <th>Kontakt</th>
+                    <th>Adres</th>
+                    <th>Opcje</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for visit in visits %}
+                <tr>
+                    <td style="font-weight: bold; color: #0056b3;">{{ visit.visit_date.replace('T', ' ') }}</td>
+                    <td>{{ visit.doctor }}</td>
+                    <td>
+                        {{ visit.patient_name }}<br>
+                        <span style="color: #6c757d; font-size: 11px;">Ur: {{ visit.birth_date }}</span>
+                    </td>
+                    <td>{{ visit.gender }}</td>
+                    <td>{{ visit.pesel }}</td>
+                    <td>
+                        Tel: {{ visit.phone }}<br>
+                        Email: {{ visit.email }}
+                    </td>
+                    <td>{{ visit.address }}</td>
+                    <td>
+                        <a href="/delete/{{ visit.id }}" class="btn-delete" onclick="return confirm('Czy na pewno anulować wizytę?')">Anuluj</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="8" style="text-align: center; padding: 30px; color: #6c757d;">Brak zaplanowanych wizyt w systemie.</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+</html>
