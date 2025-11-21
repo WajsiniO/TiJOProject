@@ -19,3 +19,5 @@ pip install --upgrade Flask-SQLAlchemy
 python app.py
 ```
 
+### Baza danych zostanie utworzona w miejscu projektu na dysku
+
