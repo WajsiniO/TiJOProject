@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, flash
 import os
 from models import db
 import database as db_ops
+import validators
 
 app = Flask(__name__)
 app.secret_key = 'sekretny_klucz_do_flash'
@@ -33,6 +34,23 @@ def book():
 
     if not all(data.values()):
         flash("Wszystkie pola formularza są wymagane!", "error")
+        return redirect(url_for('index'))
+
+    if not validators.validate_pesel(data['pesel']):
+        flash("Nieprawidłowy numer PESEL (błędna długość lub cyfra kontrolna).", "error")
+        return redirect(url_for('index'))
+
+    dates_valid, date_msg = validators.validate_dates(data['visit_date'], data['birth_date'])
+    if not dates_valid:
+        flash(date_msg, "error")
+        return redirect(url_for('index'))
+
+    if not validators.validate_phone(data['phone']):
+        flash("Nieprawidłowy numer telefonu (wymagane 9 cyfr).", "error")
+        return redirect(url_for('index'))
+
+    if not validators.validate_email(data['email']):
+        flash("Nieprawidłowy adres email.", "error")
         return redirect(url_for('index'))
 
     if db_ops.is_slot_taken(data['doctor'], data['visit_date']):
